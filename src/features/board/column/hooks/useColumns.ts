@@ -62,19 +62,19 @@ export function useColumns(boardId: string | number) {
     }, []);
 
     const moveColumn = useCallback(async (columnId: string | number, payload: MoveColumnPayload) => {
-        setLoading(true);
         setError('');
 
         try {
             const updated = await columnService.moveColumn(columnId, payload);
-            setColumns((prev) => prev.map((column) => String(column.id) === String(columnId) ? { ...column, ...updated } : column));
+            setColumns((prev) => prev
+                .map((column) => String(column.id) === String(columnId) ? { ...column, ...updated } : column)
+                .sort((a, b) => Number(a.position ?? 0) - Number(b.position ?? 0))
+            );
             return updated;
         } catch (err) {
             const message = err instanceof Error ? err.message : 'Không thể di chuyển cột';
             setError(message);
             return null;
-        } finally {
-            setLoading(false);
         }
     }, []);
 

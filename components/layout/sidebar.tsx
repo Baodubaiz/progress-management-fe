@@ -25,10 +25,15 @@ export function SidebarNav() {
     };
 
     return (
-        <div className="flex h-full w-72 flex-col border-r border-slate-200 bg-white p-5 shadow-sm">
-            <div className="mb-8">
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">PM</p>
-                <h2 className="mt-2 text-xl font-bold text-slate-900">Progress Board</h2>
+        <aside className="flex h-full w-64 flex-col border-r border-white/10 bg-slate-950/25 p-4 backdrop-blur-sm">
+            <div className="mb-8 flex items-center gap-3 px-2 pt-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500/20 text-sm font-bold text-blue-200">
+                    T
+                </div>
+                <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-200/80">Trello</p>
+                    <h2 className="text-base font-semibold text-white">Progress Board</h2>
+                </div>
             </div>
 
             <nav className="space-y-2">
@@ -41,7 +46,7 @@ export function SidebarNav() {
                             href={href}
                             className={cn(
                                 'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors',
-                                active ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                                active ? 'bg-white/10 text-white' : 'text-slate-300 hover:bg-white/5 hover:text-white'
                             )}
                         >
                             <Icon className="h-4 w-4" />
@@ -55,12 +60,12 @@ export function SidebarNav() {
                 <Button
                     variant="outline"
                     onClick={handleLogout}
-                    className="w-full justify-start gap-2 border-slate-200 text-slate-700 hover:bg-slate-100"
+                    className="w-full justify-start gap-2 border-white/10 bg-white/5 text-slate-200 hover:bg-white/10 hover:text-white"
                 >
                     <LogOut className="h-4 w-4" />
                     Đăng xuất
                 </Button>
             </div>
-        </div>
+        </aside>
     );
 }

@@ -8,9 +8,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useLabels } from '@/src/features/label/hooks/useLabels';
+import { useToast } from '@/src/providers/toast-context';
 
 export function LabelList({ projectId }: { projectId: string }) {
     const { labels, loading, error, fetchLabels, createLabel, deleteLabel } = useLabels(projectId);
+    const { showToast } = useToast();
     const [name, setName] = useState('');
     const [color, setColor] = useState('#3b82f6');
     const [submitting, setSubmitting] = useState(false);
@@ -18,6 +20,10 @@ export function LabelList({ projectId }: { projectId: string }) {
     useEffect(() => {
         void fetchLabels();
     }, [fetchLabels]);
+
+    useEffect(() => {
+        if (error) showToast(error, 'error');
+    }, [error, showToast]);
 
     const handleCreate = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -68,8 +74,6 @@ export function LabelList({ projectId }: { projectId: string }) {
                     </Button>
                 </div>
             </form>
-
-            {error ? <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">{error}</div> : null}
 
             {loading ? (
                 <div className="rounded-xl border border-slate-200 bg-white p-6 text-sm text-slate-500">Đang tải nhãn...</div>

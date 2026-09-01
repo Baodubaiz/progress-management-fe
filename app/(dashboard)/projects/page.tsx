@@ -3,7 +3,7 @@ import { ProjectList } from '@/src/features/project/project/components/ProjectLi
 
 export default function ProjectsPage() {
     return (
-        <AppShell title="Dashboard" description="Tổng quan hoạt động và tiến độ của bạn">
+        <AppShell title="Dự án" description="Theo dõi các workspace và tiến độ cộng tác của bạn">
             <ProjectList />
         </AppShell>
     );

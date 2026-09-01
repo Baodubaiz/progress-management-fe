@@ -28,7 +28,11 @@ export const taskService = {
     async updateTask(taskId: string | number, payload: UpdateTaskPayload): Promise<TaskListItem> {
         return apiRequest<TaskListItem>(`/tasks/${taskId}`, {
             method: 'PATCH',
-            body: JSON.stringify(payload),
+            body: JSON.stringify({
+                ...payload,
+                assigneeIds: payload.assigneeIds?.map(String),
+                labelIds: payload.labelIds?.map(String),
+            }),
         });
     },
 

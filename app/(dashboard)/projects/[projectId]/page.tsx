@@ -9,7 +9,7 @@ export default async function ProjectDetailPage({
     const { projectId } = await params;
 
     return (
-        <AppShell title="Project detail" description="Thông tin dự án, members và board liên quan">
+        <AppShell title="Chi tiết dự án" description="Thông tin dự án, thành viên và board liên quan">
             <ProjectDetailView projectId={projectId} />
         </AppShell>
     );

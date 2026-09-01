@@ -1,16 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
+import { useToast } from '@/src/providers/toast-context';
 
 export function RegisterForm() {
     const { register } = useAuth();
+    const { showToast } = useToast();
     const [form, setForm] = useState({
         username: '',
         email: '',
@@ -19,6 +21,10 @@ export function RegisterForm() {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        if (error) showToast(error, 'error');
+    }, [error, showToast]);
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -103,11 +109,6 @@ export function RegisterForm() {
                             />
                         </div>
 
-                        {error ? (
-                            <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600">
-                                {error}
-                            </div>
-                        ) : null}
 
                         <Button type="submit" className="w-full" disabled={loading}>
                             {loading ? 'Đang tạo tài khoản...' : 'Đăng ký'}

@@ -17,8 +17,11 @@ export function useBoards() {
 
         try {
             const result = await boardService.getBoardsByProject(projectId, params);
-            setBoards(result.boards || []);
-            setPagination(result.pagination || null);
+            const normalizedBoards = Array.isArray(result?.boards) ? result.boards : Array.isArray(result) ? result : [];
+            const normalizedPagination = result && typeof result === 'object' && 'pagination' in result ? result.pagination : null;
+
+            setBoards(normalizedBoards);
+            setPagination(normalizedPagination || null);
             return result;
         } catch (err) {
             const message = err instanceof Error ? err.message : 'Không thể tải danh sách board';

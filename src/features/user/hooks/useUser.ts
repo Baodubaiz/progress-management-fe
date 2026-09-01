@@ -144,8 +144,7 @@ export function useUser() {
 
     useEffect(() => {
         void fetchProfile();
-        void fetchUsers({ page: 1, limit: 10 });
-    }, [fetchProfile, fetchUsers]);
+    }, [fetchProfile]);
 
     return {
         user,

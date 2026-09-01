@@ -16,7 +16,29 @@ export const projectService = {
         if (params?.search) query.set('search', params.search);
 
         const suffix = query.toString() ? `?${query.toString()}` : '';
-        return apiRequest<ProjectListResponse>(`/projects${suffix}`, { method: 'GET' });
+        const response = await apiRequest<ProjectListResponse | { projects?: ProjectListItem[]; pagination?: ProjectListResponse['pagination'] }>(`/projects${suffix}`, { method: 'GET' });
+
+        if (Array.isArray(response)) {
+            return {
+                projects: response,
+                pagination: {
+                    total: response.length,
+                    page: params?.page ?? 1,
+                    limit: params?.limit ?? response.length,
+                    totalPages: 1,
+                },
+            };
+        }
+
+        return {
+            projects: response.projects ?? [],
+            pagination: response.pagination ?? {
+                total: response.projects?.length ?? 0,
+                page: params?.page ?? 1,
+                limit: params?.limit ?? response.projects?.length ?? 0,
+                totalPages: 1,
+            },
+        };
     },
 
     async getProjectById(projectId: string | number): Promise<ProjectDetail> {
