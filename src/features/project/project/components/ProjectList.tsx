@@ -44,6 +44,7 @@ export function ProjectList() {
         const created = await createProject(data);
         if (created) {
             setShowCreateForm(false);
+            void fetchProjects({ page: 1, limit: 50, search: search.trim() || undefined });
             return true;
         }
         return false;
@@ -92,15 +93,13 @@ export function ProjectList() {
             <div className="flex border-b border-slate-200">
                 <button
                     onClick={() => setActiveTab('OWNED')}
-                    className={`relative flex cursor-pointer items-center gap-2 pb-3 pt-2 px-1 text-sm font-medium transition-colors ${
-                        activeTab === 'OWNED' ? 'text-blue-600 font-semibold' : 'text-slate-500 hover:text-slate-700'
-                    }`}
+                    className={`relative flex cursor-pointer items-center gap-2 pb-3 pt-2 px-1 text-sm font-medium transition-colors ${activeTab === 'OWNED' ? 'text-blue-600 font-semibold' : 'text-slate-500 hover:text-slate-700'
+                        }`}
                 >
                     <Crown className="h-4 w-4" />
                     Dự án của tôi
-                    <span className={`ml-1.5 rounded-full px-2 py-0.5 text-xs font-semibold ${
-                        activeTab === 'OWNED' ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-600'
-                    }`}>
+                    <span className={`ml-1.5 rounded-full px-2 py-0.5 text-xs font-semibold ${activeTab === 'OWNED' ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-600'
+                        }`}>
                         {groupedProjects.owned.length}
                     </span>
                     {activeTab === 'OWNED' && (
@@ -110,15 +109,13 @@ export function ProjectList() {
 
                 <button
                     onClick={() => setActiveTab('JOINED')}
-                    className={`relative ml-8 flex cursor-pointer items-center gap-2 pb-3 pt-2 px-1 text-sm font-medium transition-colors ${
-                        activeTab === 'JOINED' ? 'text-blue-600 font-semibold' : 'text-slate-500 hover:text-slate-700'
-                    }`}
+                    className={`relative ml-8 flex cursor-pointer items-center gap-2 pb-3 pt-2 px-1 text-sm font-medium transition-colors ${activeTab === 'JOINED' ? 'text-blue-600 font-semibold' : 'text-slate-500 hover:text-slate-700'
+                        }`}
                 >
                     <UserRound className="h-4 w-4" />
                     Đang tham gia
-                    <span className={`ml-1.5 rounded-full px-2 py-0.5 text-xs font-semibold ${
-                        activeTab === 'JOINED' ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-600'
-                    }`}>
+                    <span className={`ml-1.5 rounded-full px-2 py-0.5 text-xs font-semibold ${activeTab === 'JOINED' ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-600'
+                        }`}>
                         {groupedProjects.joined.length}
                     </span>
                     {activeTab === 'JOINED' && (
@@ -139,8 +136,8 @@ export function ProjectList() {
                 ) : displayProjects.length > 0 ? (
                     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                         {displayProjects.map((project) => (
-                            <Card 
-                                key={project.id} 
+                            <Card
+                                key={project.id}
                                 className="group relative flex h-full flex-col overflow-hidden border-slate-200 bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-blue-300 hover:shadow-md"
                             >
                                 <div className="absolute left-0 top-0 h-1 w-full bg-blue-600" />
@@ -181,7 +178,7 @@ export function ProjectList() {
 
                                     {/* High Contrast Solid Blue Button */}
                                     <Link href={`/projects/${project.id}`} className="block w-full">
-                                        <Button 
+                                        <Button
                                             className="w-full justify-between bg-blue-600 font-semibold text-white shadow-sm transition-all duration-200 hover:bg-blue-700 hover:shadow cursor-pointer"
                                         >
                                             Vào dự án

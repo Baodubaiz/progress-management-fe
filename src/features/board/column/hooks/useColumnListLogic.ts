@@ -92,6 +92,18 @@ export function useColumnListLogic(boardId: string, projectId: string) {
         setBoardTasks((prev) => prev.map((task) => String(task.id) === String(taskId) ? { ...task, ...updatedTask } : task));
     }, [setBoardTasks]);
 
+    const handleTaskCreated = useCallback((newTask: TaskListItem) => {
+        setBoardTasks((prev) => {
+            const exists = prev.some((task) => String(task.id) === String(newTask.id));
+            if (exists) return prev.map((task) => String(task.id) === String(newTask.id) ? { ...task, ...newTask } : task);
+            return [newTask, ...prev];
+        });
+    }, [setBoardTasks]);
+
+    const handleTaskDeleted = useCallback((taskId: string | number) => {
+        setBoardTasks((prev) => prev.filter((task) => String(task.id) !== String(taskId)));
+    }, [setBoardTasks]);
+
     const handleDropOnColumn = useCallback(async (event: React.DragEvent<HTMLDivElement>, targetColumnId: string | number) => {
         event.preventDefault();
         event.stopPropagation();
@@ -182,6 +194,8 @@ export function useColumnListLogic(boardId: string, projectId: string) {
         handleDelete,
         handleMoveTask,
         handleTaskUpdated,
+        handleTaskCreated,
+        handleTaskDeleted,
         handleDropOnColumn,
         handleColumnDragStart,
         handleColumnDrop,

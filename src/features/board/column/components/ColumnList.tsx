@@ -30,6 +30,8 @@ export function ColumnList({ boardId, projectId }: { boardId: string; projectId:
         handleDelete,
         handleMoveTask,
         handleTaskUpdated,
+        handleTaskCreated,
+        handleTaskDeleted,
         handleDropOnColumn,
         handleColumnDragStart,
         handleColumnDrop,
@@ -228,6 +230,8 @@ export function ColumnList({ boardId, projectId }: { boardId: string; projectId:
                                     tasks={tasksByColumn.get(String(column.id)) ?? []}
                                     onMoveTask={handleMoveTask}
                                     onTaskUpdated={handleTaskUpdated}
+                                    onTaskCreated={handleTaskCreated}
+                                    onTaskDeleted={handleTaskDeleted}
                                 />
                             </div>
                         );

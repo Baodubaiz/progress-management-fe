@@ -22,6 +22,8 @@ export function TaskList({
     tasks: controlledTasks,
     onMoveTask,
     onTaskUpdated,
+    onTaskCreated,
+    onTaskDeleted,
 }: {
     columnId: string;
     projectId?: string;
@@ -34,6 +36,8 @@ export function TaskList({
         nextPosition?: string | number | null,
     ) => Promise<unknown> | unknown;
     onTaskUpdated?: (taskId: string | number, updatedTask: Partial<TaskListItem>) => void;
+    onTaskCreated?: (newTask: TaskListItem) => void;
+    onTaskDeleted?: (taskId: string | number) => void;
 }) {
     const { tasks: fetchedTasks, loading, error, fetchTasks, createTask, deleteTask, moveTask, updateTask } = useTasks(columnId);
     const { labels, fetchLabels, createLabel, updateLabel, deleteLabel } = useLabels(projectId ?? columnId);
@@ -128,6 +132,9 @@ export function TaskList({
         });
 
         if (created) {
+            if (onTaskCreated) {
+                onTaskCreated(created);
+            }
             setTitle('');
             setDescription('');
             if (titleInputRef.current) {
@@ -140,7 +147,10 @@ export function TaskList({
 
     const handleDelete = async (taskId: string | number) => {
         if (!window.confirm('Bạn có chắc muốn xoá task này không?')) return;
-        await deleteTask(taskId);
+        const result = await deleteTask(taskId);
+        if (result && onTaskDeleted) {
+            onTaskDeleted(taskId);
+        }
     };
 
     const handleOpenEditor = (task: TaskListItem) => {
