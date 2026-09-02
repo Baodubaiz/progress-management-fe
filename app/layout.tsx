@@ -16,12 +16,18 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Progress Management",
   description: "Project tracking and collaboration dashboard",
+  applicationName: "Progress Management",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Progress Management",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="vi"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-slate-100 text-slate-900">
