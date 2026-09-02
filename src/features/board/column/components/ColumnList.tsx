@@ -97,7 +97,12 @@ export function ColumnList({ boardId, projectId }: { boardId: string; projectId:
                         </Button>
 
                         {showActivity && (
-                            <div className="absolute right-0 top-12 z-50 w-80 sm:w-96 rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl animate-in fade-in slide-in-from-top-2">
+                            <div
+                                className="fixed inset-x-3 top-3 z-50 w-auto rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl animate-in fade-in slide-in-from-top-2 sm:absolute sm:inset-x-auto sm:right-0 sm:top-12 sm:w-96"
+                                role="dialog"
+                                aria-modal="true"
+                                aria-label="Lịch sử hoạt động"
+                            >
                                 <div className="mb-3 flex items-center justify-between border-b border-slate-100 pb-2">
                                     <div className="flex items-center gap-2 text-slate-900">
                                         <History className="h-4 w-4 text-blue-600" />
@@ -113,7 +118,7 @@ export function ColumnList({ boardId, projectId }: { boardId: string; projectId:
                                         <X className="h-4 w-4" />
                                     </Button>
                                 </div>
-                                <div className="max-h-[60vh] overflow-y-auto pr-1">
+                                <div className="max-h-[calc(100dvh-8rem)] overflow-y-auto pr-1 sm:max-h-[60vh]">
                                     <ActivityList projectId={projectId} />
                                 </div>
                             </div>
